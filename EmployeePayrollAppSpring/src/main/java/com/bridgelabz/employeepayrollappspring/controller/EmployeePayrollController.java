@@ -18,8 +18,13 @@ public class EmployeePayrollController {
     @Autowired
     private IEmployeePayrollService employeePayrollService;
 
+    /**
+     *
+     * @return all list of Employee Payroll Data
+     */
     @RequestMapping(value = {"","/","/get"})
-    public ResponseEntity<ResponseDTO> getEmployeePayrollData() {
+    public ResponseEntity<ResponseDTO> getEmployeePayrollData()
+    {
         List<EmployeePayrollData> empDataList = null;
         empDataList = employeePayrollService.getEmployeePayrollData();
         ResponseDTO respDTO = new ResponseDTO("Get Call Success", empDataList);
@@ -29,21 +34,21 @@ public class EmployeePayrollController {
     /**
      *
      * @param empId
-     * Displaying Employee data by id using get method
+     * Employee Data by id as Path Variable using Get Mapping
      */
     @GetMapping("/get/{empId}")
     public ResponseEntity<ResponseDTO> getEmployeePayrollData(@PathVariable("empId") int empId)
     {
         EmployeePayrollData empPayrollData = null;
         empPayrollData = employeePayrollService.getEmployeePayrollDataById(empId);
-        ResponseDTO respDTO = new ResponseDTO("Get Call for Id Successfully", empPayrollData);
+        ResponseDTO respDTO = new ResponseDTO("Get Call for Id Successfull", empPayrollData);
         return new ResponseEntity<ResponseDTO> (respDTO, HttpStatus.OK);
     }
 
     /**
      *
      * @param empPayrollDTO
-     * Creating employee data using Body by Post mapping
+     * Creating Employee data by Request Body using Post Mapping
      */
     @PostMapping("/create")
     public ResponseEntity<ResponseDTO> createEmployeePayrollData(@RequestBody EmployeePayrollDTO empPayrollDTO){
@@ -55,21 +60,23 @@ public class EmployeePayrollController {
 
     /**
      *
+     * @param empId
      * @param empPayrollDTO
-     * Updating employee data using path variable and request body by put method
+     * Updating an Employee data by Path Variable and Request Body using Put Mapping
      */
-    @PutMapping("/update")
-    public ResponseEntity<ResponseDTO> updateEmployeePayrollData(@RequestBody EmployeePayrollDTO empPayrollDTO){
-        EmployeePayrollData empData = null;
-        empData = employeePayrollService.updateEmployeePayrollData(empPayrollDTO);
-        ResponseDTO respDTO = new ResponseDTO("Updated Employee Payroll Data Successfully", empData);
-        return new ResponseEntity<ResponseDTO>(respDTO, HttpStatus.OK);
+    @PutMapping(path = "/update/{empId}")
+    public ResponseEntity<ResponseDTO> updateEmployeePayrollData(@PathVariable("empId") int empId,
+                                                                 @RequestBody EmployeePayrollDTO empPayrollDTO){
+
+        EmployeePayrollData employeePayrollData = employeePayrollService.updateEmployeePayrollData(empId, empPayrollDTO);
+        ResponseDTO respDTO = new ResponseDTO("Updated Employee payroll Data for: ", empPayrollDTO);
+        return new ResponseEntity<ResponseDTO> (respDTO, HttpStatus.OK);
     }
 
     /**
      *
      * @param empId
-     * Deleting employee data using path variable by delete method
+     * Detete an employee data by id as path variable using Delete Mapping
      */
     @DeleteMapping("/delete/{empId}")
     public ResponseEntity<ResponseDTO> deleteEmployeePayrollData(@PathVariable("empId") int empId){
@@ -77,5 +84,4 @@ public class EmployeePayrollController {
         ResponseDTO respDTO = new ResponseDTO("Deleted Successfully", "Deleted id: " +empId);
         return new ResponseEntity<ResponseDTO>(respDTO, HttpStatus.OK);
     }
-
 }
