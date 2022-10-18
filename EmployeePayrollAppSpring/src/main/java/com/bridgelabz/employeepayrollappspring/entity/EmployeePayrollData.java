@@ -1,15 +1,22 @@
 package com.bridgelabz.employeepayrollappspring.entity;
 
 import com.bridgelabz.employeepayrollappspring.dto.EmployeePayrollDTO;
+import lombok.Data;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class EmployeePayrollData {
+    @Id
+    @GeneratedValue
     private int employeeId;
     private String name;
     private long salary;
 
     public EmployeePayrollData() {}
 
-    // Constructors
     public EmployeePayrollData(int empId, EmployeePayrollDTO employeePayrollDTO)
     {
         this.employeeId = empId;
@@ -17,10 +24,16 @@ public class EmployeePayrollData {
         this.salary = employeePayrollDTO.salary;
     }
 
-    //Getters and Setters
+    public EmployeePayrollData(EmployeePayrollDTO employeePayrollDTO){
+        this.name = employeePayrollDTO.name;
+        this.salary = employeePayrollDTO.salary;
+    }
+
+
     public int getEmployeeId() {
         return employeeId;
     }
+
 
     public void setEmployeeId(int employeeId) {
         this.employeeId = employeeId;
@@ -30,7 +43,7 @@ public class EmployeePayrollData {
         return name;
     }
 
-    public void setName(String name)  {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -41,4 +54,5 @@ public class EmployeePayrollData {
     public void setSalary(long salary) {
         this.salary = salary;
     }
+
 }
