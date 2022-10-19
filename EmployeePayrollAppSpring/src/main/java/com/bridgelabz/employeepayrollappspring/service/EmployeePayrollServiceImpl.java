@@ -17,70 +17,60 @@ public class EmployeePayrollServiceImpl implements IEmployeePayrollService {
     private List<EmployeePayrollData> employeePayrollList = new ArrayList<>();
     @Autowired
     EmployeePayrollRepository employeePayrollRepository;
+
     /**
-     *
-     * @return employee List
+     * @return all employee List
      */
     @Override
     public List<EmployeePayrollData> getEmployeePayrollData() {
-        return employeePayrollList;
+        return employeePayrollRepository.findAll();
     }
 
     /**
-     *
-     * @param empId
-     * @return
+     * @param empId Getting employee details by id
      */
     @Override
     public EmployeePayrollData getEmployeePayrollDataById(int empId) {
 
-        return employeePayrollList.stream()
-                .filter(empData -> empData.getEmployeeId() == empId)
-                .findFirst()
+        return employeePayrollRepository.findById(empId)
                 .orElseThrow(() -> new EmployeePayrollException("Employee Not Found"));
-
     }
 
     /**
-     *
-     * @param empPayrollDTO
-     * @return
+     * @param empPayrollDTO Creating an employee data
      */
     @Override
     public EmployeePayrollData createEmployeePayrollData(EmployeePayrollDTO empPayrollDTO) {
         EmployeePayrollData employeePayrollData = null;
-        employeePayrollData = new EmployeePayrollData(employeePayrollList.size() + 1, empPayrollDTO);
-        employeePayrollList.add(employeePayrollData);
+        employeePayrollData = new EmployeePayrollData(empPayrollDTO);
         return employeePayrollRepository.save(employeePayrollData);
     }
 
     /**
-     *
      * @param empId
-     * @param empPayrollDTO
-     * @return
+     * @param empPayrollDTO Updating employee data by using id
      */
     @Override
     public EmployeePayrollData updateEmployeePayrollData(int empId, EmployeePayrollDTO empPayrollDTO) {
         EmployeePayrollData empData = this.getEmployeePayrollDataById(empId);
-        empData.setName(empPayrollDTO.getName());
-        empData.setSalary(empPayrollDTO.getSalary());
-        empData.setStartDate(empPayrollDTO.getStartDate());
-        empData.setGender(empPayrollDTO.getGender());
-        empData.setNote(empPayrollDTO.getNote());
-        empData.setProfilePic(empPayrollDTO.getProfilePic());
-        empData.setDepartment(empPayrollDTO.getDepartment());
+//      empData.setName(empPayrollDTO.getName());
+//      empData.setSalary(empPayrollDTO.getSalary());
+//      empData.setStartDate(empPayrollDTO.getStartDate());
+//      empData.setGender(empPayrollDTO.getGender());
+//      empData.setNote(empPayrollDTO.getNote());
+//      empData.setProfilePic(empPayrollDTO.getProfilePic());
+//      empData.setDepartment(empPayrollDTO.getDepartment());
 
-        employeePayrollList.set(empId - 1, empData);
-        return empData;
+        empData.updateEmployeeEmployeePayrollData(empPayrollDTO);
+        return employeePayrollRepository.save(empData);
     }
 
     /**
-     *
      * @param empId
      */
     @Override
     public void deleteEmployeePayrollData(int empId) {
-        employeePayrollList.remove(empId - 1);
+        EmployeePayrollData empData = this.getEmployeePayrollDataById(empId);
+        employeePayrollRepository.delete(empData);
     }
 }
