@@ -2,10 +2,9 @@ package com.bridgelabz.employeepayrollappspring.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-import lombok.ToString;
 
 import javax.validation.constraints.*;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -14,24 +13,25 @@ public class EmployeePayrollDTO {
     @NotEmpty(message = "Employee Name should not be Null")
     private String name;
 
-    @Min(value = 500,message = "Minimum Wage should be 500 or More")
+    @Min(value = 500,message = "Wage should be 500 or More")
+    @Max(value = 999999,message = "Wage should not exceeds 999999")
     private long salary;
 
-    @Pattern(regexp = "male|female|others",message = "Gender Needs to be Male,Female or Others")
+    @Pattern(regexp = "male|female",message = "Gender Needs to be Male or Female")
     private String gender;
 
-    @JsonFormat(pattern = "dd MMM yyyy")
-    @NotNull(message = "startDate Should not be Empty")
-    @PastOrPresent(message = "startDate Should not be past or present Date")
-    private Date startDate;
+    @JsonFormat(pattern = "dd MM yyyy")
+    @NotNull(message = "Start Date Should not be Empty")
+    @PastOrPresent(message = "Start Date Should be Past or Present Date")
+    private LocalDate startDate;
 
-    @NotBlank(message = "Note cannot be empty")
+    @NotBlank(message = "Note Should not be empty")
     private String note;
 
     @NotBlank(message = "Profile Pic should not be Empty")
     private String profilePic;
 
-    @NotNull(message = "department should not be Empty")
+    @NotNull(message = "Department should not be Empty")
     private List<String> department;
 
 }
