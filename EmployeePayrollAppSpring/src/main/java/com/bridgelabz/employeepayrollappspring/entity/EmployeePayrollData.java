@@ -2,57 +2,36 @@ package com.bridgelabz.employeepayrollappspring.entity;
 
 import com.bridgelabz.employeepayrollappspring.dto.EmployeePayrollDTO;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import java.util.Date;
+import java.util.List;
 
-@Entity
-public class EmployeePayrollData {
-    @Id
-    @GeneratedValue
+
+@NoArgsConstructor
+public @Data class EmployeePayrollData {
     private int employeeId;
     private String name;
     private long salary;
 
-    public EmployeePayrollData() {}
+    private String gender;
 
-    public EmployeePayrollData(int empId, EmployeePayrollDTO employeePayrollDTO)
-    {
+    private Date startDate;
+
+    private String note;
+
+    private String profilePic;
+
+    private List<String> department;
+
+    public EmployeePayrollData(int empId, EmployeePayrollDTO employeePayrollDTO) {
         this.employeeId = empId;
-        this.name = employeePayrollDTO.name;
-        this.salary = employeePayrollDTO.salary;
+        this.name = employeePayrollDTO.getName();
+        this.salary = employeePayrollDTO.getSalary();
+        this.gender = employeePayrollDTO.getGender();
+        this.startDate = employeePayrollDTO.getStartDate();
+        this.note = employeePayrollDTO.getNote();
+        this.profilePic = employeePayrollDTO.getProfilePic();
+        this.department = employeePayrollDTO.getDepartment();
     }
-
-    public EmployeePayrollData(EmployeePayrollDTO employeePayrollDTO){
-        this.name = employeePayrollDTO.name;
-        this.salary = employeePayrollDTO.salary;
-    }
-
-
-    public int getEmployeeId() {
-        return employeeId;
-    }
-
-
-    public void setEmployeeId(int employeeId) {
-        this.employeeId = employeeId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public long getSalary() {
-        return salary;
-    }
-
-    public void setSalary(long salary) {
-        this.salary = salary;
-    }
-
 }
