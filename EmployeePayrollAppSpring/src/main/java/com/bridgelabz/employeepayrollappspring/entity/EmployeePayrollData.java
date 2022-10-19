@@ -1,44 +1,37 @@
 package com.bridgelabz.employeepayrollappspring.entity;
 
 import com.bridgelabz.employeepayrollappspring.dto.EmployeePayrollDTO;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-public class EmployeePayrollData {
+import java.util.Date;
+import java.util.List;
+
+
+@NoArgsConstructor
+public @Data class EmployeePayrollData {
     private int employeeId;
     private String name;
     private long salary;
 
-    public EmployeePayrollData() {}
+    private String gender;
 
-    // Constructors
-    public EmployeePayrollData(int empId, EmployeePayrollDTO employeePayrollDTO)
-    {
+    private Date startDate;
+
+    private String note;
+
+    private String profilePic;
+
+    private List<String> department;
+
+    public EmployeePayrollData(int empId, EmployeePayrollDTO employeePayrollDTO) {
         this.employeeId = empId;
-        this.name = employeePayrollDTO.name;
-        this.salary = employeePayrollDTO.salary;
-    }
-
-    //Getters and Setters
-    public int getEmployeeId() {
-        return employeeId;
-    }
-
-    public void setEmployeeId(int employeeId) {
-        this.employeeId = employeeId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name)  {
-        this.name = name;
-    }
-
-    public long getSalary() {
-        return salary;
-    }
-
-    public void setSalary(long salary) {
-        this.salary = salary;
+        this.name = employeePayrollDTO.getName();
+        this.salary = employeePayrollDTO.getSalary();
+        this.gender = employeePayrollDTO.getGender();
+        this.startDate = employeePayrollDTO.getStartDate();
+        this.note = employeePayrollDTO.getNote();
+        this.profilePic = employeePayrollDTO.getProfilePic();
+        this.department = employeePayrollDTO.getDepartment();
     }
 }

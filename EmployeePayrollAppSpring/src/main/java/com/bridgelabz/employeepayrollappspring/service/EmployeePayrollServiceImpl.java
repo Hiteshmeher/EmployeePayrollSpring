@@ -2,17 +2,19 @@ package com.bridgelabz.employeepayrollappspring.service;
 
 import com.bridgelabz.employeepayrollappspring.dto.EmployeePayrollDTO;
 import com.bridgelabz.employeepayrollappspring.entity.EmployeePayrollData;
+import com.bridgelabz.employeepayrollappspring.exception.EmployeePayrollException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class EmployeePayrollServiceImpl implements IEmployeePayrollService{
+public class EmployeePayrollServiceImpl implements IEmployeePayrollService {
     private List<EmployeePayrollData> employeePayrollList = new ArrayList<>();
 
     /**
-     * Method for All Employee Payroll data List
+     *
+     * @return employee List
      */
     @Override
     public List<EmployeePayrollData> getEmployeePayrollData() {
@@ -20,40 +22,54 @@ public class EmployeePayrollServiceImpl implements IEmployeePayrollService{
     }
 
     /**
-     * Method for get an employee data by id
+     *
+     * @param empId
+     * @return
      */
     @Override
     public EmployeePayrollData getEmployeePayrollDataById(int empId) {
-        return employeePayrollList.get(empId-1);
+
+        return employeePayrollList.stream()
+                .filter(empData -> empData.getEmployeeId() == empId)
+                .findFirst()
+                .orElseThrow(() -> new EmployeePayrollException("Employee Not Found"));
+
     }
 
     /**
-     * Method to Create an Employee Payroll data
+     *
+     * @param empPayrollDTO
+     * @return
      */
     @Override
     public EmployeePayrollData createEmployeePayrollData(EmployeePayrollDTO empPayrollDTO) {
         EmployeePayrollData employeePayrollData = null;
-        employeePayrollData = new EmployeePayrollData(employeePayrollList.size()+1, empPayrollDTO);
+        employeePayrollData = new EmployeePayrollData(employeePayrollList.size() + 1, empPayrollDTO);
         employeePayrollList.add(employeePayrollData);
         return employeePayrollData;
     }
 
     /**
-     * Method to Update an Employee Payroll data
+     *
+     * @param empId
+     * @param empPayrollDTO
+     * @return
      */
     @Override
     public EmployeePayrollData updateEmployeePayrollData(int empId, EmployeePayrollDTO empPayrollDTO) {
         EmployeePayrollData empData = this.getEmployeePayrollDataById(empId);
-        empData.setName(empPayrollDTO.name);
-        empData.setSalary(empPayrollDTO.salary);
-        employeePayrollList.set(empId-1, empData);
+        empData.setName(empPayrollDTO.getName());
+        empData.setSalary(empPayrollDTO.getSalary());
+        employeePayrollList.set(empId - 1, empData);
         return empData;
     }
 
     /**
-     * Method to Delete an Employee Payroll data
+     *
+     * @param empId
      */
     @Override
     public void deleteEmployeePayrollData(int empId) {
-        employeePayrollList.remove(empId-1);
-    }}
+        employeePayrollList.remove(empId - 1);
+    }
+}
