@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Data
@@ -24,7 +23,7 @@ public class EmployeePayrollData {
 
     private String gender;
 
-    private Date startDate;
+    private LocalDate startDate;
 
     private String note;
 

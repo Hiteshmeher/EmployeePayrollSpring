@@ -14,12 +14,12 @@ import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class EmployeePayrollExceptionHandler {
+
+    private static  final String message = "Exception while Processing REST Request";
+
+
     /**
-     *
-     * @param exception
-     * @return Response Entity
-     *
-     *Global Exception
+     * Global Exception
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ResponseDTO> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception){
@@ -35,10 +35,10 @@ public class EmployeePayrollExceptionHandler {
         ResponseDTO responseDTO = new ResponseDTO("Exception while processing REST Request", exception.getMessage());
         return new ResponseEntity<>(responseDTO, HttpStatus.BAD_REQUEST);
     }
-    private static  final String message = "Exception while Processing REST Request";
+
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ResponseDTO> handleHttpMessageNotReadableException(HttpMessageNotReadableException exception){
-        ResponseDTO responseDTO = new ResponseDTO(message,"Should have date in the Format of dd MM yyyy");
+        ResponseDTO responseDTO = new ResponseDTO(message,"Should have date in the Format of dd mmm yyyy");
         return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.BAD_REQUEST);
     }
 

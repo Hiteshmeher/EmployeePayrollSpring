@@ -19,7 +19,8 @@ public class EmployeePayrollServiceImpl implements IEmployeePayrollService {
     EmployeePayrollRepository employeePayrollRepository;
 
     /**
-     * @return all employee List
+     *
+     * Getting all employee List
      */
     @Override
     public List<EmployeePayrollData> getEmployeePayrollData() {
@@ -27,7 +28,8 @@ public class EmployeePayrollServiceImpl implements IEmployeePayrollService {
     }
 
     /**
-     * @param empId Getting employee details by id
+     * @param empId
+     * Getting employee details by id
      */
     @Override
     public EmployeePayrollData getEmployeePayrollDataById(int empId) {
@@ -37,7 +39,8 @@ public class EmployeePayrollServiceImpl implements IEmployeePayrollService {
     }
 
     /**
-     * @param empPayrollDTO Creating an employee data
+     * @param empPayrollDTO
+     * Creating an employee data
      */
     @Override
     public EmployeePayrollData createEmployeePayrollData(EmployeePayrollDTO empPayrollDTO) {
@@ -48,7 +51,8 @@ public class EmployeePayrollServiceImpl implements IEmployeePayrollService {
 
     /**
      * @param empId
-     * @param empPayrollDTO Updating employee data by using id
+     * @param empPayrollDTO
+     * Updating employee data by using id
      */
     @Override
     public EmployeePayrollData updateEmployeePayrollData(int empId, EmployeePayrollDTO empPayrollDTO) {
@@ -67,10 +71,21 @@ public class EmployeePayrollServiceImpl implements IEmployeePayrollService {
 
     /**
      * @param empId
+     * deleting employee by id
      */
     @Override
     public void deleteEmployeePayrollData(int empId) {
         EmployeePayrollData empData = this.getEmployeePayrollDataById(empId);
         employeePayrollRepository.delete(empData);
+    }
+
+    /**
+     *
+     * @param department
+     *  getting employee list by department
+     */
+    @Override
+    public List<EmployeePayrollData> getEmployeePayrollDataByDepartment(String department) {
+        return employeePayrollRepository.findEmployeesByDepartment(department);
     }
 }

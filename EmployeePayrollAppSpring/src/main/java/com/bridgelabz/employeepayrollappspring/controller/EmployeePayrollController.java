@@ -18,17 +18,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/employeepayrollservice")
 public class EmployeePayrollController {
-    /**
-     * Created the Variables template and counter to use globally.
-     */
+
     @Autowired
     private IEmployeePayrollService employeePayrollService;
 
     /**
      *
-     * Getting all employee data
+     * Getting all the employee list
      */
-
     @GetMapping(value = {"", "/", "/getAll"})
     public ResponseEntity<ResponseDTO> getEmployeePayrollData() {
         List<EmployeePayrollData> empDataList = null;
@@ -38,7 +35,22 @@ public class EmployeePayrollController {
     }
 
     /**
-     * Getting employee details by id
+     *
+     * @param department
+     * Getting Department wise employee list using department
+     */
+    @GetMapping("/getdept/{department}")
+    public ResponseEntity<ResponseDTO> getDepartmentById(@PathVariable("department") String department){
+        List<EmployeePayrollData> empDataList = null;
+        empDataList =employeePayrollService.getEmployeePayrollDataByDepartment(department);
+        ResponseDTO respDTO = new ResponseDTO("Get call success", empDataList);
+        return new ResponseEntity<ResponseDTO>(respDTO, HttpStatus.OK);
+    }
+
+    /**
+     *
+     * @param empId
+     * Getting employee details by id from the Database
      */
     @GetMapping("/get/{empId}")
     public ResponseEntity<ResponseDTO> getEmployeePayrollData(@PathVariable("empId") int empId) {
@@ -50,7 +62,7 @@ public class EmployeePayrollController {
 
     /**
      *
-     * Creating an Employee Data
+     * Creating an Employee Data and save to Database
      */
     @PostMapping("/create")
     public ResponseEntity<ResponseDTO> createEmployeePayrollData(@Valid @RequestBody EmployeePayrollDTO empPayrollDTO) {
@@ -61,12 +73,12 @@ public class EmployeePayrollController {
     }
 
     /**
-     *
-     * Updating an Employee Details
+     * @param empId
+     * Updating an Employee Details by using id from Database
      */
     @PutMapping(path = "/update/{empId}")
-    public ResponseEntity<ResponseDTO> updateEmployeePayrollData(@PathVariable("empId") int empId,
-                                                                 @Valid @RequestBody EmployeePayrollDTO empPayrollDTO) {
+    public ResponseEntity<ResponseDTO> updateEmployeePayrollData(@Valid @PathVariable("empId") int empId,
+                                                                 @RequestBody EmployeePayrollDTO empPayrollDTO) {
 
         EmployeePayrollData empData = null;
         empData = employeePayrollService.updateEmployeePayrollData(empId, empPayrollDTO);
@@ -75,8 +87,8 @@ public class EmployeePayrollController {
     }
 
     /**
-     *
-     *Deleting an Employee Deatils
+     * @param empId
+     * Deleting an Employee Deatils using id from the Database
      */
     @DeleteMapping("/delete/{empId}")
     public ResponseEntity<ResponseDTO> deleteEmployeePayrollData(@PathVariable("empId") int empId) {
