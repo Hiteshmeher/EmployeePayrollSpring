@@ -3,11 +3,13 @@ package com.bridgelabz.employeepayrollappspring.service;
 import com.bridgelabz.employeepayrollappspring.dto.EmployeePayrollDTO;
 import com.bridgelabz.employeepayrollappspring.entity.EmployeePayrollData;
 import com.bridgelabz.employeepayrollappspring.exception.EmployeePayrollException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 public class EmployeePayrollServiceImpl implements IEmployeePayrollService {
     private List<EmployeePayrollData> employeePayrollList = new ArrayList<>();
@@ -60,6 +62,12 @@ public class EmployeePayrollServiceImpl implements IEmployeePayrollService {
         EmployeePayrollData empData = this.getEmployeePayrollDataById(empId);
         empData.setName(empPayrollDTO.getName());
         empData.setSalary(empPayrollDTO.getSalary());
+        empData.setStartDate(empPayrollDTO.getStartDate());
+        empData.setGender(empPayrollDTO.getGender());
+        empData.setNote(empPayrollDTO.getNote());
+        empData.setProfilePic(empPayrollDTO.getProfilePic());
+        empData.setDepartment(empPayrollDTO.getDepartment());
+
         employeePayrollList.set(empId - 1, empData);
         return empData;
     }

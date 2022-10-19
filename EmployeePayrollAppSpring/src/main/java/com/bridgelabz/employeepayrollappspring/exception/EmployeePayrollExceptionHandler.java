@@ -35,10 +35,9 @@ public class EmployeePayrollExceptionHandler {
         ResponseDTO responseDTO = new ResponseDTO("Exception while processing REST Request", exception.getMessage());
         return new ResponseEntity<>(responseDTO, HttpStatus.BAD_REQUEST);
     }
-    private static  final String message = "Exception while Prosessing REST Request";
+    private static  final String message = "Exception while Processing REST Request";
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ResponseDTO> handleHttpMessageNotReadableException(HttpMessageNotReadableException exception){
-//        log.error("Invalid Date Format",exception);
         ResponseDTO responseDTO = new ResponseDTO(message,"Should have date in the Format of dd MM yyyy");
         return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.BAD_REQUEST);
     }

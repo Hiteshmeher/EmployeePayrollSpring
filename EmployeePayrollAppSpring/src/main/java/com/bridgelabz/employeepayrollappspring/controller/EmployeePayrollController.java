@@ -4,6 +4,7 @@ import com.bridgelabz.employeepayrollappspring.dto.EmployeePayrollDTO;
 import com.bridgelabz.employeepayrollappspring.dto.ResponseDTO;
 import com.bridgelabz.employeepayrollappspring.entity.EmployeePayrollData;
 import com.bridgelabz.employeepayrollappspring.service.IEmployeePayrollService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,24 +13,20 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-/**
- * Puprose : To Create Employee Payroll App and Perform Operations like CRUD.
- * Author : Veer.Singa
- */
+
+@Slf4j
 @RestController
 @RequestMapping("/employeepayrollservice")
 public class EmployeePayrollController {
     /**
-     * 1.Auto Wired all the required Classes to use the instance Objects globally.
-     * 2.Created the Variables template and counter to use globally.
+     * Created the Variables template and counter to use globally.
      */
     @Autowired
     private IEmployeePayrollService employeePayrollService;
 
     /**
-     * @GetMapping = Annotation for mapping HTTP GET requests onto specific handler methods.
-     * @RequestParam =  It is used to bind a web request parameter to a method parameter.
-     * @return -ResponseDTO
+     *
+     * Getting all employee data
      */
 
     @GetMapping(value = {"", "/", "/getAll"})
@@ -41,9 +38,7 @@ public class EmployeePayrollController {
     }
 
     /**
-     * @RequestBody = allows us to retrieve the request's body.
-     * @param empId
-     * @return ResponseDTO
+     * Getting employee details by id
      */
     @GetMapping("/get/{empId}")
     public ResponseEntity<ResponseDTO> getEmployeePayrollData(@PathVariable("empId") int empId) {
@@ -55,8 +50,7 @@ public class EmployeePayrollController {
 
     /**
      *
-     * @param empPayrollDTO
-     * @return
+     * Creating an Employee Data
      */
     @PostMapping("/create")
     public ResponseEntity<ResponseDTO> createEmployeePayrollData(@Valid @RequestBody EmployeePayrollDTO empPayrollDTO) {
@@ -68,9 +62,7 @@ public class EmployeePayrollController {
 
     /**
      *
-     * @param empId
-     * @param empPayrollDTO
-     * @return
+     * Updating an Employee Details
      */
     @PutMapping(path = "/update/{empId}")
     public ResponseEntity<ResponseDTO> updateEmployeePayrollData(@PathVariable("empId") int empId,
@@ -84,8 +76,7 @@ public class EmployeePayrollController {
 
     /**
      *
-     * @param empId
-     * @return
+     *Deleting an Employee Deatils
      */
     @DeleteMapping("/delete/{empId}")
     public ResponseEntity<ResponseDTO> deleteEmployeePayrollData(@PathVariable("empId") int empId) {
