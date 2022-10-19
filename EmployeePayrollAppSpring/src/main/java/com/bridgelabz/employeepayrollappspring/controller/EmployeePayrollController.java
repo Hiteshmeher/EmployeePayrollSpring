@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+/**
+ * Puprose : To Create Employee Payroll App and Perform Operations like CRUD.
+ * Author : Veer.Singa
+ */
 @RestController
 @RequestMapping("/employeepayrollservice")
 public class EmployeePayrollController {
@@ -69,8 +73,8 @@ public class EmployeePayrollController {
      * @return
      */
     @PutMapping(path = "/update/{empId}")
-    public ResponseEntity<ResponseDTO> updateEmployeePayrollData(@Valid @PathVariable("empId") int empId,
-                                                                 @RequestBody EmployeePayrollDTO empPayrollDTO) {
+    public ResponseEntity<ResponseDTO> updateEmployeePayrollData(@PathVariable("empId") int empId,
+                                                                 @Valid @RequestBody EmployeePayrollDTO empPayrollDTO) {
 
         EmployeePayrollData empData = null;
         empData = employeePayrollService.updateEmployeePayrollData(empId, empPayrollDTO);
